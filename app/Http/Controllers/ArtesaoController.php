@@ -7,6 +7,16 @@ use App\Models\Artesao;
 
 class ArtesaoController extends Controller
 {
+
+    public function welcome()
+    {
+        $artesaos = Artesao::orderBy('nome')->get();
+        $postagem = Postagem('imagens')->get(); XXXXX
+
+        return view('welcome', compact('artesaos', 'postagens'));
+    }
+
+
     // Página principal de artesãos
     public function index()
     {

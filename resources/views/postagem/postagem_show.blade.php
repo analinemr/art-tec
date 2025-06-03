@@ -11,7 +11,7 @@
 
                 <div class="card-body">
                     <p><strong>Id: </strong> {{ $postagem->id }}</p>
-                    <p><strong>Categoria: </strong> {{ $postagem->categoria->nome }}</p>
+                    <p><strong>Artesão: </strong> {{ $postagem->artesao->nome }}</p>
                     <p><strong>Autor: </strong> {{ $postagem->autor->name }}</p>
                     <p><strong>Título: </strong> {{ $postagem->titulo }}</p>
 

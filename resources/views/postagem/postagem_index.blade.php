@@ -64,6 +64,9 @@
                                 </td>
                             </tr>
                             @endforeach
+
+                            {{ $postagens->links() }}
+
                         </tbody>
                     </table>
 

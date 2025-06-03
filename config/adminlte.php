@@ -316,8 +316,8 @@ return [
             'text' => 'search',
         ],
         [
-            'text' => 'Categoria',
-            'url' => 'categoria',
+            'text' => 'Artesao',
+            'url' => 'artesao',
             //'can' => 'manage-blog',
         ],
         [

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ArtesaoController;    // ALTERADO de CategoriaController
+use App\Http\Controllers\ArtesaoController;
 use App\Http\Controllers\PostagemController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\UserController;
@@ -13,8 +13,8 @@ use App\Http\Controllers\UserController;
 // PÁGINA PRINCIPAL
 Route::get('/', [SiteController::class, 'index'])->name('site.principal');
 
-// Postagens por categoria (se quiser mudar para artesao, altere também aqui)
-Route::get('/PostagemByCategoriaId/{id}', [SiteController::class, 'PostagemByCategoriaId'])->name('site.PostagemByCategoriaId');
+// Postagens por artesao (se quiser mudar para artesao, altere também aqui)
+Route::get('/PostagemByArtesaoId/{id}', [SiteController::class, 'PostagemByArtesaoId'])->name('site.PostagemByArtesaoId');
 
 // Postagens por Autor
 Route::get('/PostagemByAutorId/{id}', [SiteController::class, 'PostagemByAutorId'])->name('site.PostagemByAutorId');
@@ -27,7 +27,7 @@ Route::middleware(['auth'])->group(function () {
     // HOME USUÁRIO
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-    // ARTESAO (antes categoria)
+    // ARTESAO
     Route::get('/artesao', [ArtesaoController::class, 'index'])->name('artesao.index');
     Route::get('/artesao/create', [ArtesaoController::class, 'create'])->name('artesao.create');
     Route::post('/artesao', [ArtesaoController::class, 'store'])->name('artesao.store');

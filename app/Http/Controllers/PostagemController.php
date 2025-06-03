@@ -11,11 +11,11 @@ use App\Models\Postagem;
 class PostagemController extends Controller
 {
     //Página principal de postagem
-    public function index()
-    {
-        $postagens = Postagem::orderBy('titulo', 'ASC')->get();
-        return view('postagem.postagem_index', compact('postagens'));
+    public function index() {
+        $postagens = Postagem::with('artesao')->paginate(10);
+        return view('welcome', compact('postagens'));
     }
+
 
     //Criar nova postagem
     public function create()
