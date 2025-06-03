@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Postagem extends Model implements Auditable
@@ -12,15 +12,15 @@ class Postagem extends Model implements Auditable
 
     protected $table = 'postagens';
 
-    // Relacionamento 1x1 para retornar o nome do artesão pela postagem
-    public function artesao(): HasOne
+    // Postagem pertence a um artesão
+    public function artesao(): BelongsTo
     {
-        return $this->hasOne(Artesao::class, 'id', 'artesao_id');
+        return $this->belongsTo(Artesao::class, 'artesao_id', 'id');
     }
 
-    // Relacionamento 1x1 para retornar o nome do autor pela postagem
-    public function autor(): HasOne
+    // Postagem pertence a um autor (usuário)
+    public function autor(): BelongsTo
     {
-        return $this->hasOne(User::class, 'id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

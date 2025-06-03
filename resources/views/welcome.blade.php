@@ -59,20 +59,22 @@
         </header>
 
         <div class="row">
-            @foreach ($postagens as $postagens)
+            @foreach ($postagens as $postagem)
                 <div class="col-4 col-6-medium col-12-small">
                     <article class="box style2">
                         <div class="swiper mySwiper">
                             <div class="swiper-wrapper">
                                 @foreach ($postagem->imagens as $imagem)
                                     <div class="swiper-slide">
-                                        <a href="#" class="image featured"><img src="{{ asset('storage/' . $imagem->caminho) }}" alt="{{ $postagem->nome }}" /></a>
+                                        <a href="#" class="image featured">
+                                            <img src="{{ asset('storage/' . $imagem->caminho) }}" alt="{{ $postagem->titulo }}" />
+                                        </a>
                                     </div>
                                 @endforeach
                             </div>
                             <div class="swiper-pagination"></div>
                         </div>
-                        <h3><a href="#">{{ $postagem->nome }}</a></h3>
+                        <h3><a href="#">{{ $postagem->titulo }}</a></h3>
                         <p>{{ Str::limit($postagem->descricao, 100) }}</p>
                     </article>
                 </div>

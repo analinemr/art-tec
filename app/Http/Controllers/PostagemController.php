@@ -12,10 +12,10 @@ class PostagemController extends Controller
 {
     //Página principal de postagem
     public function index() {
-        $postagens = Postagem::with('artesao')->paginate(10);
-        return view('welcome', compact('postagens'));
+    $artesaos = Artesao::orderBy('nome')->get();
+    $postagens = Postagem::with('artesao')->paginate(10);
+    return view('welcome', compact('artesaos', 'postagens'));
     }
-
 
     //Criar nova postagem
     public function create()
