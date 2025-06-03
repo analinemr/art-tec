@@ -2,7 +2,7 @@
 
 @section('content')
 
-<!-- Rotas para o EDITOR RICH -->
+<!-- Estilos e scripts do Rich Text Editor -->
 <link rel="stylesheet" href="{{ url('/richtexteditor/rte_theme_default.css') }}" />
 <script type="text/javascript" src="{{ url('/richtexteditor/rte.js') }}"></script>
 <script type="text/javascript" src="{{ url('/richtexteditor/plugins/all_plugins.js') }}"></script>
@@ -16,54 +16,51 @@
                 <div class="card-body">
 
                     @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
                     @endif
 
-                <!-- Formulário de edição -->
-                <form action="{{ url('postagem/' . $postagem->id) }}" method="post">
-                    @method('PUT')
-                    @csrf
+                    <!-- Formulário de edição de postagem -->
+                    <form action="{{ url('postagem/' . $postagem->id) }}" method="post">
+                        @method('PUT')
+                        @csrf
 
-                        <!-- 'select' para inluir a cetegoria -->
+                        <!-- Seleção de Artesão -->
                         <div class="form-group">
-                            <select name="categoria_id" class="form-control">
-                                @foreach ($categorias as $value)
-
-                                    <!-- IF para vincular o 'select' e retonar corretamente os dados -->
-                                    @if ($value->id == $postagem->categoria_id)
-                                        <option selected value="{{ $value->id }}">{{ $value->nome }}</option>
-                                    @else
-                                        <option value="{{ $value->id }}">{{ $value->nome }}</option>
-                                    @endif
-
+                            <label for="artesao_id">Artesão:</label>
+                            <select name="artesao_id" class="form-control">
+                                @foreach ($artesaos as $value)
+                                    <option value="{{ $value->id }}"
+                                        {{ $value->id == $postagem->artesao_id ? 'selected' : '' }}>
+                                        {{ $value->nome }}
+                                    </option>
                                 @endforeach
-                              </select>
+                            </select>
                         </div>
 
+                        <!-- Título -->
                         <div class="form-group">
                             <label for="titulo">Título da Postagem:</label>
-                            <input type="text" value="{{ $postagem->titulo }}" name="titulo" class="form-control">                        </div>
+                            <input type="text" value="{{ $postagem->titulo }}" name="titulo" class="form-control">
+                        </div>
 
-
+                        <!-- Descrição -->
                         <div class="form-group">
-                            <label for="descricao">Descrição da Postagem: </label>
-                            <!-- id EDITOR RICH para edição de postagem-->
-                            <textarea name="descricao" rows="5" cols="33" class="form-control" id="inp_editor1">{{ $postagem->descricao }}</textarea>
+                            <label for="descricao">Descrição da Postagem:</label>
+                            <textarea name="descricao" rows="5" class="form-control" id="inp_editor1">{{ $postagem->descricao }}</textarea>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Salvar</button>
-
                     </form>
 
-                    <!-- Renderização EDITOR RICH -->
+                    <!-- Inicializa o editor -->
                     <script>
-                       var editor1 = new RichTextEditor("#inp_editor1");
+                        var editor1 = new RichTextEditor("#inp_editor1");
                     </script>
 
                 </div>
@@ -72,4 +69,3 @@
     </div>
 </div>
 @endsection
-

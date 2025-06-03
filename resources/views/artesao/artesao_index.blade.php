@@ -3,13 +3,13 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card">
-                <div class="card-header">Postagens</div>
+                <div class="card-header">Artesãos</div>
 
                 <!-- Script de confirmação -->
                 <script>
-                    function ConfirmDelete(){
+                    function ConfirmDelete() {
                         return confirm('Tem certeza que deseja excluir este registro?');
                     }
                 </script>
@@ -17,11 +17,9 @@
                 <div class="card-body">
 
                     <!-- Botão Criar -->
-                    <div class="mb-3">
-                        <a class="btn btn-success" href="{{ url('postagem/create') }}">Criar nova postagem</a>
-                    </div>
+                    <a class="btn btn-success mb-3" href="{{ url('artesao/create') }}">Cadastrar novo artesão</a>
 
-                    <!-- Mensagens -->
+                    <!-- Mensagens de sessão -->
                     @if (session('message'))
                         <div class="alert alert-success">
                             {{ session('message') }}
@@ -35,27 +33,39 @@
                     @endif
 
                     <!-- Tabela -->
-                    <table class='table'>
+                    <table class='table table-bordered table-hover'>
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Artesão</th>
-                                <th>Título</th>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Telefone</th>
+                                <th>Cidade</th>
+                                <th>Foto</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($postagens as $value)
+                            @foreach ($artesaos as $value)
                             <tr>
                                 <td>{{ $value->id }}</td>
-                                <td>{{ $value->artesao->nome ?? 'N/A' }}</td> <!-- Relacionamento com artesão -->
-                                <td>{{ $value->titulo }}</td>
+                                <td>{{ $value->nome }}</td>
+                                <td>{{ $value->email }}</td>
+                                <td>{{ $value->telefone }}</td>
+                                <td>{{ $value->cidade }}</td>
+                                <td>
+                                    @if ($value->fotografia)
+                                        <img src="{{ asset('storage/' . $value->fotografia) }}" alt="Foto" width="50">
+                                    @else
+                                        <span>Sem foto</span>
+                                    @endif
+                                </td>
                                 <td>
                                     <div style="display: flex; flex-wrap: wrap; gap: 5px;">
-                                        <a class="btn btn-info btn-sm" href="{{ url('postagem/'.$value->id) }}">Visualizar</a>
-                                        <a class="btn btn-warning btn-sm" href="{{ url('postagem/'.$value->id.'/edit') }}">Editar</a>
+                                        <a class="btn btn-info btn-sm" href="{{ url('artesao/'.$value->id) }}">Visualizar</a>
+                                        <a class="btn btn-warning btn-sm" href="{{ url('artesao/'.$value->id.'/edit') }}">Editar</a>
 
-                                        <form action="{{ url('postagem/'.$value->id) }}" method="POST" onsubmit="return ConfirmDelete()">
+                                        <form action="{{ url('artesao/' . $value->id)}}" method="post" onsubmit="return ConfirmDelete()">
                                             @method('DELETE')
                                             @csrf
                                             <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
@@ -66,9 +76,6 @@
                             @endforeach
                         </tbody>
                     </table>
-
-                    <!-- Paginação, se estiver usando paginate() no controller -->
-                    {{ $postagens->links() ?? '' }}
 
                 </div>
             </div>

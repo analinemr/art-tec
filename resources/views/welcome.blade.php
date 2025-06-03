@@ -13,7 +13,7 @@
                             <article class="box post">
                                 <header>
                                     <h2>{{ $value->titulo }}</h2>
-                                    <p>Categoria: {{ $value->categoria->nome }}</p>
+                                    <p>Artesao: {{ $value->artesao->nome }}</p>
                                 </header>
                                 <!-- "!!" - Serve para manter a formatação do editor de texto-->
                                 <p>{!! $value->descricao !!}</p>

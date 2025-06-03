@@ -2,7 +2,7 @@
 
 @section('content')
 
- <!-- Rotas para o EDITOR RICH -->
+<!-- Estilos e scripts do Editor Rich -->
 <link rel="stylesheet" href="{{ url('/richtexteditor/rte_theme_default.css') }}" />
 <script type="text/javascript" src="{{ url('/richtexteditor/rte.js') }}"></script>
 <script type="text/javascript" src="{{ url('/richtexteditor/plugins/all_plugins.js') }}"></script>
@@ -15,8 +15,8 @@
 
                 <div class="card-body">
 
-                     @if ($errors->any())
-                     <div class="alert alert-danger">
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
                         <ul>
                             @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -25,39 +25,39 @@
                     </div>
                     @endif
 
-                <!-- Formulário de  criação de postagem-->
+                    <!-- Formulário de criação de postagem -->
+                    <form action="{{ url('postagem') }}" method="post">
+                        @csrf
 
-                <form action="{{ url('postagem') }}" method="post">
-
-                        @csrf  <!-- Protege o formulário contra CSRF -  -->
-
+                        <!-- Seleção do Artesão -->
                         <div class="form-group">
-                        <select name="categoria_id" class="form-control">
-                            @foreach ($categorias as $value)
-                                <option value="{{$value->id}}">{{$value->nome}}</option>
-                            @endforeach
-                        </select>
+                            <label for="artesao_id">Artesão:</label>
+                            <select name="artesao_id" id="artesao_id" class="form-control">
+                                @foreach ($artesaos as $value)
+                                    <option value="{{ $value->id }}">{{ $value->nome }}</option>
+                                @endforeach
+                            </select>
                         </div>
 
+                        <!-- Campo de título -->
                         <div class="form-group">
-                            <label for="titulo">Título da Postagem: </label>
+                            <label for="titulo">Título da Postagem:</label>
                             <input type="text" id="titulo" name="titulo" class="form-control">
                         </div>
 
-                        <div class="form-group row">
-                            <label for="descricao">Descrição da Postagem: </label>
-                            <!-- id EDITOR RICH para edição de postagem-->
-                            <textarea name="descricao" rows="4" cols="50" class="form-control" id="inp_editor1">Escreva a descrição da sua postagem</textarea>
-
+                        <!-- Campo de descrição com editor -->
+                        <div class="form-group">
+                            <label for="descricao">Descrição da Postagem:</label>
+                            <textarea name="descricao" id="inp_editor1" rows="5" class="form-control">Escreva a descrição da sua postagem</textarea>
                         </div>
 
+                        <!-- Botão enviar -->
                         <div>
-                        <button type="submit" class="btn btn-primary">Enviar</button>
+                            <button type="submit" class="btn btn-primary">Enviar</button>
                         </div>
-
                     </form>
 
-                    <!-- Renderização EDITOR RICH -->
+                    <!-- Renderizar editor RichText -->
                     <script>
                         var editor1 = new RichTextEditor("#inp_editor1");
                     </script>
@@ -68,4 +68,3 @@
     </div>
 </div>
 @endsection
-
