@@ -11,7 +11,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Nova Postagem</div>
+                <div class="card-header">Novo produto</div>
 
                 <div class="card-body">
 
@@ -41,13 +41,13 @@
 
                         <!-- Campo de título -->
                         <div class="form-group">
-                            <label for="titulo">Título da Postagem:</label>
+                            <label for="titulo">Nome do produto:</label>
                             <input type="text" id="titulo" name="titulo" class="form-control">
                         </div>
 
                         <!-- Campo de descrição com editor -->
                         <div class="form-group">
-                            <label for="descricao">Descrição da Postagem:</label>
+                            <label for="descricao">Descrição do produto:</label>
                             <textarea name="descricao" id="inp_editor1" rows="5" class="form-control">Escreva a descrição da sua postagem</textarea>
                         </div>
 

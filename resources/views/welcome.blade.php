@@ -59,26 +59,34 @@
         </header>
 
         <div class="row">
-            @foreach ($postagens as $postagem)
-                <div class="col-4 col-6-medium col-12-small">
-                    <article class="box style2">
-                        <div class="swiper mySwiper">
-                            <div class="swiper-wrapper">
-                                @foreach ($postagem->imagens as $imagem)
-                                    <div class="swiper-slide">
-                                        <a href="#" class="image featured">
-                                            <img src="{{ asset('storage/' . $imagem->caminho) }}" alt="{{ $postagem->titulo }}" />
-                                        </a>
-                                    </div>
-                                @endforeach
-                            </div>
-                            <div class="swiper-pagination"></div>
+        @foreach ($postagens as $postagem)
+            @php
+                // Extrai imagens da descrição (editor rich text)
+                preg_match_all('/<img[^>]+src="([^">]+)"/i', $postagem->descricao, $matches);
+                $imagens = array_slice($matches[1], 0, 3); // Limita a 3 imagens
+            @endphp
+
+            <div class="col-4 col-6-medium col-12-small">
+                <article class="box style2">
+
+                    @if (count($imagens) > 0)
+                    <div class="swiper mySwiper">
+                        <div class="swiper-wrapper">
+                            @foreach ($imagens as $img)
+                                <div class="swiper-slide">
+                                    <img src="{{ $img }}" alt="Imagem da postagem">
+                                </div>
+                            @endforeach
                         </div>
-                        <h3><a href="#">{{ $postagem->titulo }}</a></h3>
-                        <p>{{ Str::limit($postagem->descricao, 100) }}</p>
-                    </article>
-                </div>
-            @endforeach
+                        <div class="swiper-pagination"></div>
+                    </div>
+                    @endif
+
+                    <h3>{{ $postagem->titulo }}</h3>
+                    <p>{!! Str::limit(strip_tags($postagem->descricao), 100) !!}</p>
+                </article>
+            </div>
+        @endforeach
         </div>
     </div>
 </article>
@@ -107,5 +115,24 @@
         </ul>
     </footer>
 </article>
+
+<!-- Swiper JS (coloque no final da página) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('.mySwiper').forEach((el) => {
+            new Swiper(el, {
+                slidesPerView: 1,
+                loop: true,
+                pagination: {
+                    el: el.querySelector('.swiper-pagination'),
+                    clickable: true,
+                }
+            });
+        });
+    });
+</script>
 
 @endsection

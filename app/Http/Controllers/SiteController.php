@@ -10,8 +10,8 @@ class SiteController extends Controller
     // Método para a página principal
     public function index()
     {
-        $artesaos = Artesao::orderBy('nome')->get();
-        $postagens = Postagem::orderBy('titulo')->get();
+        $artesaos = Artesao::orderBy('nome')->paginate(3);
+        $postagens = Postagem::orderBy('titulo')->paginate(3);
 
         return view('welcome', compact('artesaos', 'postagens'));
     }

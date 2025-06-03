@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Artesao;
+use App\Models\Postagem;
 
 class ArtesaoController extends Controller
 {
@@ -11,11 +12,10 @@ class ArtesaoController extends Controller
     public function welcome()
     {
         $artesaos = Artesao::orderBy('nome')->get();
-        $postagem = Postagem('imagens')->get(); XXXXX
+        $postagens = Postagem::orderBy('created_at', 'desc')->get();
 
         return view('welcome', compact('artesaos', 'postagens'));
     }
-
 
     // Página principal de artesãos
     public function index()

@@ -45,13 +45,13 @@
 
                         <!-- Título -->
                         <div class="form-group">
-                            <label for="titulo">Título da Postagem:</label>
+                            <label for="titulo">Nome do produto:</label>
                             <input type="text" value="{{ $postagem->titulo }}" name="titulo" class="form-control">
                         </div>
 
                         <!-- Descrição -->
                         <div class="form-group">
-                            <label for="descricao">Descrição da Postagem:</label>
+                            <label for="descricao">Descrição do produto:</label>
                             <textarea name="descricao" rows="5" class="form-control" id="inp_editor1">{{ $postagem->descricao }}</textarea>
                         </div>
 
