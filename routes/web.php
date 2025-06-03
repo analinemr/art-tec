@@ -1,12 +1,19 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SiteController;
+use App\Http\Controllers\ArtesaoController;
+use App\Http\Controllers\PostagemController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\HomeController;
+
 // Rotas públicas
 Route::get('/', [SiteController::class, 'index'])->name('site.principal');
 
 // Rotas autenticadas
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     // Artesãos
     Route::prefix('artesaos')->group(function () {
