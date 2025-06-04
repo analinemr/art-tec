@@ -6,6 +6,8 @@ use App\Http\Controllers\ArtesaoController;
 use App\Http\Controllers\PostagemController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SearchController;
+
 
     // Rotas públicas
     Route::get('/', [SiteController::class, 'index'])->name('site.principal');
@@ -16,6 +18,9 @@ use App\Http\Controllers\HomeController;
 
     // Página inicial do usuário
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+    // Pesquisa no NavBar
+    Route::get('/search', [SearchController::class, 'index'])->name('search');
 
     //CRUD Artesãos
     Route::get('/artesao', [ArtesaoController::class, 'index'])->name('artesao.index');

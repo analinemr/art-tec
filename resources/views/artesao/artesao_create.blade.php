@@ -39,11 +39,6 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="telefone">Telefone</label>
-                            <input type="text" id="telefone" name="telefone" class="form-control">
-                        </div>
-
-                        <div class="form-group">
                             <label for="cidade">Cidade</label>
                             <input type="text" id="cidade" name="cidade" class="form-control">
                         </div>

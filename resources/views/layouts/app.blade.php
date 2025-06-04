@@ -45,27 +45,129 @@
             font-size: 1.2em;
         }
 
+        /* Paginação */
         .pagination {
-            text-align: center;
-            margin: 30px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
         }
 
         .pagination .page-link,
         .pagination .page-item {
-            display: inline-block;
-            margin: 0 5px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 8px 12px;
+            border: 1px solid #4b08a3;
+            border-radius: 6px;
+            background-color: #4b08a3;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .pagination .page-link:hover {
+            background-color: #4b08a3;
+        }
+
+        .pagination .active .page-link {
+            background-color: #070707;
+            color: #4b08a3;
+            border-color: #070707;
+        }
+
+        .pagination svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Nav custom */
+        nav ul.container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        nav ul.container .left,
+        nav ul.container .right {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            align-items: center;
+        }
+
+        nav ul li ul {
+            display: none;
+            position: absolute;
+            background-color: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        nav ul li:hover ul {
+            display: block;
+        }
+
+        nav ul li ul li {
+            padding: 5px 0;
+        }
+
+        nav ul li ul li a,
+        nav ul li ul li button {
+            color: #333;
+            text-decoration: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        nav ul li ul li a:hover,
+        nav ul li ul li button:hover {
+            color: #008cba;
         }
     </style>
 </head>
+
 <body class="is-preload">
 
 <!-- Nav -->
 <nav id="nav">
     <ul class="container">
-        <li><a href="#top">Início</a></li>
-        <li><a href="#work">Artesãos</a></li>
-        <li><a href="#portfolio">Produtos</a></li>
-        <li><a href="#contact">Perfil</a></li>
+        <div class="left">
+            <li><a href="#top">Início</a></li>
+            <li><a href="#work">Artesãos</a></li>
+            <li><a href="#portfolio">Produtos</a></li>
+        </div>
+
+        <div class="right">
+            @auth
+                <li>
+                    <a href="#">{{ Auth::user()->name }}</a>
+                    <ul>
+                        <li><a href="{{ route('dashboard') }}">Painel</a></li>
+                        <li><a href="{{ route('profile.edit') }}">Alterar Perfil</a></li>
+                        <li><a href="{{ route('password.request') }}">Alterar Senha</a></li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit">Sair</button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            @else
+                <li><a href="{{ route('login') }}">Login</a></li>
+                <li><a href="{{ route('register') }}">Cadastrar</a></li>
+            @endauth
+        </div>
     </ul>
 </nav>
 
@@ -118,7 +220,7 @@
 
         <!-- Paginação Artesãos -->
         <div class="pagination">
-            {{ $artesaos->links() }}
+            {{ $artesaos->withQueryString()->links() }}
         </div>
     </div>
 </article>
@@ -137,71 +239,58 @@
 
         <div class="row">
             @foreach ($postagens as $postagem)
-            <div class="col-4 col-6-medium col-12-small">
-                <article class="box style2">
-                    <div class="swiper mySwiper">
-                        <div class="swiper-wrapper">
-                            @php
-                                preg_match_all('/<img[^>]+src="([^">]+)"/i', $postagem->descricao, $matches);
-                                $descricaoImagens = $matches[1] ?? [];
-                            @endphp
+                <div class="col-4 col-6-medium col-12-small">
+                    <article class="box style2">
+                        <div class="swiper mySwiper">
+                            <div class="swiper-wrapper">
+                                @php
+                                    preg_match_all('/<img[^>]+src="([^">]+)"/i', $postagem->descricao, $matches);
+                                    $descricaoImagens = $matches[1] ?? [];
+                                @endphp
 
-                            @if (!empty($descricaoImagens))
-                                @foreach ($descricaoImagens as $imgSrc)
+                                @if (!empty($descricaoImagens))
+                                    @foreach ($descricaoImagens as $imgSrc)
+                                        <div class="swiper-slide">
+                                            <a href="{{ route('postagem.show', $postagem->id) }}" class="image featured">
+                                                <img src="{{ $imgSrc }}" alt="Imagem da postagem">
+                                            </a>
+                                        </div>
+                                    @endforeach
+                                @else
                                     <div class="swiper-slide">
                                         <a href="{{ route('postagem.show', $postagem->id) }}" class="image featured">
-                                            <img src="{{ $imgSrc }}" alt="Imagem da postagem">
+                                            <img src="{{ asset('images/default-image.jpg') }}" alt="Imagem padrão">
                                         </a>
                                     </div>
-                                @endforeach
-                            @else
-                                <div class="swiper-slide">
-                                    <a href="{{ route('postagem.show', $postagem->id) }}" class="image featured">
-                                        <img src="{{ asset('images/default-image.jpg') }}" alt="Imagem padrão">
-                                    </a>
-                                </div>
-                            @endif
+                                @endif
+                            </div>
+                            <div class="swiper-pagination"></div>
                         </div>
-                        <div class="swiper-pagination"></div>
-                    </div>
 
-                    <h3>
-                        <a href="{{ route('postagem.show', $postagem->id) }}">
-                            {{ $postagem->titulo }}
-                        </a>
-                    </h3>
+                        <h3>
+                            <a href="{{ route('postagem.show', $postagem->id) }}">
+                                {{ $postagem->titulo }}
+                            </a>
+                        </h3>
 
-                    <p>{!! Str::limit(strip_tags($postagem->descricao), 100) !!}</p>
-                </article>
-            </div>
+                        <p>{!! Str::limit(strip_tags($postagem->descricao), 100) !!}</p>
+                    </article>
+                </div>
             @endforeach
         </div>
 
         <!-- Paginação Produtos -->
         <div class="pagination">
-            {{ $postagens->links() }}
+            {{ $postagens->withQueryString()->links() }}
         </div>
     </div>
 </article>
 
+
 <!-- Contato -->
 <article id="contact" class="wrapper style4">
+       <ul class="container">
     <div class="container medium">
-        <div class="col-12">
-            <hr />
-            <h3>Find me on ...</h3>
-            <ul class="social">
-                <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-                <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-                <li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
-                <li><a href="#" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-                <li><a href="#" class="icon brands fa-tumblr"><span class="label">Tumblr</span></a></li>
-                <li><a href="#" class="icon brands fa-google-plus"><span class="label">Google+</span></a></li>
-                <li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
-            </ul>
-            <hr />
-        </div>
-    </div>
     <footer>
         <ul id="copyright">
             <li>&copy; Untitled. All rights reserved.</li>

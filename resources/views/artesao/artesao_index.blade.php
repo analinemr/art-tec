@@ -40,7 +40,6 @@
                     <th>ID</th>
                     <th>Nome</th>
                     <th>Email</th>
-                    <th>Telefone</th>
                     <th>Cidade</th>
                     <th>Foto</th>
                     <th style="width: 180px;">Ações</th>
@@ -52,7 +51,6 @@
                     <td>{{ $artesao->id }}</td>
                     <td>{{ $artesao->nome }}</td>
                     <td>{{ $artesao->email }}</td>
-                    <td>{{ $artesao->telefone }}</td>
                     <td>{{ $artesao->cidade }}</td>
 
                     <!--Fotografia-->
