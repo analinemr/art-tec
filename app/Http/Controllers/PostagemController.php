@@ -11,7 +11,7 @@ class PostagemController extends Controller
     // Página principal de postagem
     public function index()
     {
-        $postagens = Postagem::orderBy('titulo', 'ASC')->get();
+        $postagens = Postagem::orderBy('titulo', 'ASC')->paginate(10); // 10 por página
         return view('postagem.postagem_index', compact('postagens'));
     }
 

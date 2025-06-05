@@ -44,7 +44,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($postagens as $postagem)
+                @forelse ($postagens as $postagem)
                 <tr>
                     <td>{{ $postagem->id }}</td>
                     <td>{{ $postagem->artesao->nome ?? 'N/A' }}</td>
@@ -87,9 +87,18 @@
                         </div>
                     </td>
                 </tr>
-                @endforeach
+                @empty
+                <tr>
+                    <td colspan="4" class="text-center">Nenhuma postagem encontrada.</td>
+                </tr>
+                @endforelse
             </tbody>
         </table>
+
+        <!-- Paginação -->
+        <div class="d-flex justify-content-center">
+            {{ $postagens->links() }}
+        </div>
 
     </div>
 </div>

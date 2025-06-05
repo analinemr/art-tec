@@ -4,24 +4,23 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateArtesaosTable extends Migration
 {
-    public function up(): void
+    public function up()
     {
         Schema::create('artesaos', function (Blueprint $table) {
             $table->id();
-            $table->string('nome');
-            $table->longText('biografia');
+            $table->string('nome', 100)->unique();
+            $table->text('biografia')->nullable();
             $table->string('email')->nullable();
-            $table->string('telefone')->nullable();
             $table->string('cidade')->nullable();
-            $table->string('fotografia')->nullable(); // aqui o campo da foto
+            $table->string('fotografia')->nullable();
             $table->timestamps();
         });
     }
 
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('artesaos');
     }
-};
+}

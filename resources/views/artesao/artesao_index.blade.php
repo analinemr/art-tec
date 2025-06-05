@@ -105,6 +105,12 @@
             </tbody>
         </table>
 
+        <!-- Paginação -->
+        <div class="d-flex justify-content-center">
+            {{ $artesaos->links() }}
+        </div>
+
+
     </div>
 </div>
 @endsection

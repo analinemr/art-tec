@@ -49,38 +49,40 @@
         .pagination {
             display: flex;
             justify-content: center;
-            align-items: center;
-            gap: 8px;
+            gap: 6px;
+            margin-top: 30px;
         }
 
-        .pagination .page-link,
-        .pagination .page-item {
+        .pagination a,
+        .pagination span {
             display: inline-flex;
-            justify-content: center;
             align-items: center;
-            padding: 8px 12px;
-            border: 1px solid #4b08a3;
-            border-radius: 6px;
-            background-color: #4b08a3;
-            color: #333;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            color: #000;
             text-decoration: none;
-            font-size: 14px;
-            transition: background-color 0.3s ease;
+            font-weight: 500;
+            transition: background-color 0.3s, color 0.3s;
+            cursor: pointer;
         }
 
-        .pagination .page-link:hover {
-            background-color: #4b08a3;
+        .pagination a:hover {
+            background-color: #e6e6e6;
         }
 
-        .pagination .active .page-link {
-            background-color: #070707;
-            color: #4b08a3;
-            border-color: #070707;
+        .pagination .active {
+            background-color: #4CAF50; /* Verde igual da imagem */
+            color: white;
+            border-color: #4CAF50;
+            cursor: default;
         }
 
-        .pagination svg {
-            width: 16px;
-            height: 16px;
+        .pagination .disabled {
+            opacity: 0.5;
+            pointer-events: none;
         }
 
         /* Nav custom */
@@ -152,9 +154,8 @@
                 <li>
                     <a href="#">{{ Auth::user()->name }}</a>
                     <ul>
-                        <li><a href="{{ route('dashboard') }}">Painel</a></li>
-                        <li><a href="{{ route('profile.edit') }}">Alterar Perfil</a></li>
-                        <li><a href="{{ route('password.request') }}">Alterar Senha</a></li>
+                        <li><a href="{{ route('home') }}">Início</a></li>
+                        <li><a href="{{ route('admin.alterarSenha') }}">Alterar Senha</a></li>
                         <li>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
@@ -206,22 +207,43 @@
             @foreach ($artesaos as $artesao)
                 <div class="col-4 col-6-medium col-12-small">
                     <section class="box style1">
-                        @if ($artesao->fotografia)
-                            <img src="{{ asset('storage/' . $artesao->fotografia) }}" alt="{{ $artesao->nome }}" class="artesao-img">
-                        @else
-                            <span class="icon featured fa-user"></span>
-                        @endif
-                        <h3>{{ $artesao->nome }}</h3>
+                    @if ($artesao->fotografia)
+                        <img src="{{ asset('storage/' . $artesao->fotografia) }}" alt="{{ $artesao->nome }}" class="artesao-img">
+                    @else
+                        <span class="icon featured fa-user"></span>
+                    @endif                        <h3>{{ $artesao->nome }}</h3>
                         <p>{{ Str::limit(strip_tags($artesao->biografia ?? 'Sem biografia'), 100) }}</p>
                     </section>
                 </div>
             @endforeach
         </div>
 
-        <!-- Paginação Artesãos -->
+        <!-- Paginação -->
         <div class="pagination">
-            {{ $artesaos->withQueryString()->links() }}
+            {{-- Link para página anterior --}}
+            @if ($artesaos->onFirstPage())
+                <span>«</span>
+            @else
+                <a href="{{ $artesaos->previousPageUrl() }}" rel="prev">«</a>
+            @endif
+
+            {{-- Links das páginas --}}
+            @foreach ($artesaos->getUrlRange(1, $artesaos->lastPage()) as $page => $url)
+                @if ($page == $artesaos->currentPage())
+                    <span class="active">{{ $page }}</span>
+                @else
+                    <a href="{{ $url }}">{{ $page }}</a>
+                @endif
+            @endforeach
+
+            {{-- Link para página seguinte --}}
+            @if ($artesaos->hasMorePages())
+                <a href="{{ $artesaos->nextPageUrl() }}" rel="next">»</a>
+            @else
+                <span>»</span>
+            @endif
         </div>
+
     </div>
 </article>
 
@@ -279,10 +301,32 @@
             @endforeach
         </div>
 
-        <!-- Paginação Produtos -->
+        <!-- Paginação -->
         <div class="pagination">
-            {{ $postagens->withQueryString()->links() }}
+            {{-- Link para página anterior --}}
+            @if ($postagens->onFirstPage())
+                <span>«</span>
+            @else
+                <a href="{{ $postagens->previousPageUrl() }}" rel="prev">«</a>
+            @endif
+
+            {{-- Links das páginas --}}
+            @foreach ($postagens->getUrlRange(1, $postagens->lastPage()) as $page => $url)
+                @if ($page == $postagens->currentPage())
+                    <span class="active">{{ $page }}</span>
+                @else
+                    <a href="{{ $url }}">{{ $page }}</a>
+                @endif
+            @endforeach
+
+            {{-- Link para página seguinte --}}
+            @if ($postagens->hasMorePages())
+                <a href="{{ $postagens->nextPageUrl() }}" rel="next">»</a>
+            @else
+                <span>»</span>
+            @endif
         </div>
+
     </div>
 </article>
 
