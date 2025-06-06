@@ -186,7 +186,6 @@
                     <h1><strong>Rio Art&Tec</strong></h1>
                 </header>
                 <p>Encontre, conheça e valorize artesãos do Rio de Janeiro.</p>
-                <a href="#work" class="button large scrolly">Saiba mais!</a>
             </div>
         </div>
     </div>
@@ -224,7 +223,7 @@
             @if ($artesaos->onFirstPage())
                 <span>«</span>
             @else
-                <a href="{{ $artesaos->previousPageUrl() }}" rel="prev">«</a>
+                <a href="{{ $artesaos->previousPageUrl() }}#work" rel="prev">«</a>
             @endif
 
             {{-- Links das páginas --}}
@@ -232,13 +231,13 @@
                 @if ($page == $artesaos->currentPage())
                     <span class="active">{{ $page }}</span>
                 @else
-                    <a href="{{ $url }}">{{ $page }}</a>
+                    <a href="{{ $url }}#work">{{ $page }}</a>
                 @endif
             @endforeach
 
             {{-- Link para página seguinte --}}
             @if ($artesaos->hasMorePages())
-                <a href="{{ $artesaos->nextPageUrl() }}" rel="next">»</a>
+                <a href="{{ $artesaos->nextPageUrl() }}#work" rel="next">»</a>
             @else
                 <span>»</span>
             @endif
@@ -307,7 +306,7 @@
             @if ($postagens->onFirstPage())
                 <span>«</span>
             @else
-                <a href="{{ $postagens->previousPageUrl() }}" rel="prev">«</a>
+                <a href="{{ $postagens->previousPageUrl() }}#portfolio" rel="prev">«</a>
             @endif
 
             {{-- Links das páginas --}}
@@ -315,18 +314,18 @@
                 @if ($page == $postagens->currentPage())
                     <span class="active">{{ $page }}</span>
                 @else
-                    <a href="{{ $url }}">{{ $page }}</a>
+                    <a href="{{ $url }}#portfolio">{{ $page }}</a>
                 @endif
             @endforeach
 
             {{-- Link para página seguinte --}}
             @if ($postagens->hasMorePages())
-                <a href="{{ $postagens->nextPageUrl() }}" rel="next">»</a>
+                <a href="{{ $postagens->nextPageUrl() }}#portfolio" rel="next">»</a>
             @else
                 <span>»</span>
             @endif
         </div>
-
+        
     </div>
 </article>
 
