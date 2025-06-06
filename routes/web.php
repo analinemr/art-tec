@@ -19,9 +19,6 @@ use App\Http\Controllers\SearchController;
     // Página inicial do usuário
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    // Pesquisa no NavBar
-    Route::get('/search', [SearchController::class, 'index'])->name('search');
-
     //CRUD Artesãos
     Route::get('/artesao', [ArtesaoController::class, 'index'])->name('artesao.index');
     Route::get('/artesao/create', [ArtesaoController::class, 'create'])->name('artesao.create');
