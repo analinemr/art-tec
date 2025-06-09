@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 
     <style>
+        
+        p{
+            font: inherit;  
+            color:rgb(20, 14, 47);         
+        }
+
         /* Swiper */
         .swiper {
             width: 100%;
@@ -135,6 +141,7 @@
         nav ul li ul li button:hover {
             color: #008cba;
         }
+
     </style>
 </head>
 
@@ -200,7 +207,7 @@
     <div class="container">
         <header>
             <h2>Conheça alguns artesãos da Art&Tec</h2>
-            <p>Odio turpis amet sed consequat eget posuere consequat.</p>
+            <p>Apresentamos os maravilhosos artesão da Art&Tec</p>
         </header>
         <div class="row aln-center">
             @foreach ($artesaos as $artesao)
@@ -255,7 +262,7 @@
     <div class="container">
         <header>
             <h2>Veja alguns dos nossos produtos</h2>
-            <p>Artesanatos feitos com muito carinho.</p>
+            <p>Artesanatos feitos com muito carinho e muita qualidade</p>
         </header>
 
         <div class="row">
