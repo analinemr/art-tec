@@ -11,7 +11,7 @@ class SiteController extends Controller
     public function index()
     {
         $artesaos = Artesao::orderBy('nome')->paginate(3);
-        $postagens = Postagem::orderBy('titulo')->paginate(3);
+        $postagens = Postagem::orderBy('titulo')->paginate(9);
 
         return view('welcome', compact('artesaos', 'postagens'));
     }
