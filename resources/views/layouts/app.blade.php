@@ -277,6 +277,7 @@
                                 @endphp
 
                                 @if (!empty($descricaoImagens))
+    <!---->
                                     @foreach ($descricaoImagens as $imgSrc)
                                         <div class="swiper-slide">
                                             <a href="{{ route('postagem.show', $postagem->id) }}" class="image featured">
