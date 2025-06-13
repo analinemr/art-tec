@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Artesao extends Model implements Auditable
@@ -45,5 +46,10 @@ class Artesao extends Model implements Auditable
                 ? substr($value, 0, 500) . '...'
                 : $value;
         })->toArray();
+    }
+
+    public function postagens(): HasMany
+    {
+        return $this->hasMany(Postagem::class, 'artesao_id', 'id');
     }
 }

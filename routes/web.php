@@ -11,10 +11,11 @@ use App\Http\Controllers\SearchController;
 
     // Rotas públicas
     Route::get('/', [SiteController::class, 'index'])->name('site.principal');
+    Route::get('/PostagemByArtesaoId/{id}', [SiteController::class, 'PostagemByArtesaoId'])->name('site.PostagemByArtesaoId');
 
     Auth::routes();
     // Rotas autenticadas
-    Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
     // Página inicial do usuário
     Route::get('/home', [HomeController::class, 'index'])->name('home');
